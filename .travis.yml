@@ -1,0 +1,18 @@
+dist: xenial
+language: python
+python:
+  - "3.6"
+  - "3.7-dev"
+# command to install dependencies
+install:
+  - pip install pipenv
+  - pipenv install --dev
+  - python -m textblob.download_corpora
+  - pip install coveralls
+# command to run tests
+script:
+  - pytest
+  - flake8
+  - bandit -n 3 -lll -r .
+after_success:
+  - coveralls
